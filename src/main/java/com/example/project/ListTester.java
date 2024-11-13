@@ -6,15 +6,14 @@ public class ListTester {
             return;
         }
 
-        int size = 0;
         list.findFirst();
-        do {
-            size++;
+        int size = 1;
+        while (!list.last()) {
             list.findNext();
-        } while (!list.last());
+            size++;
+        }
 
         n = n % size;
-
         for (int i = 0; i < n; i++) {
             list.findFirst();
             T firstElement = list.retrieve();
@@ -47,3 +46,4 @@ public class ListTester {
         l2.insert(l1.retrieve());
     }
 }
+
