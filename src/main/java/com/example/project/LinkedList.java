@@ -1,3 +1,5 @@
+package com.example.project;
+
 public class LinkedList<T> implements List<T> {
     private Node<T> head;
     private Node<T> current;
@@ -36,10 +38,10 @@ public class LinkedList<T> implements List<T> {
 
     public void insert(T e) {
         if (empty()) {
-            current = head = new Node<T>(e);
+            current = head = new Node<>(e);
         } else {
             Node<T> tmp = current.next;
-            current.next = new Node<T>(e);
+            current.next = new Node<>(e);
             current = current.next;
             current.next = tmp;
         }
@@ -64,43 +66,23 @@ public class LinkedList<T> implements List<T> {
 
     public T mostFrequentElement() {
         if (empty()) {
-            throw new IllegalStateException("The list is empty.");
+            throw new IllegalStateException("List is empty.");
         }
 
+        Map<T, Integer> frequencyMap = new HashMap<>();
         Node<T> temp = head;
         T mostFrequent = null;
         int maxFrequency = 0;
 
         while (temp != null) {
-            T data = temp.data;
-            int frequency = 0;
-            Node<T> innerTemp = head;
-
-            while (innerTemp != null) {
-                if (innerTemp.data.equals(data)) {
-                    frequency++;
-                }
-                innerTemp = innerTemp.next;
+            frequencyMap.put(temp.data, frequencyMap.getOrDefault(temp.data, 0) + 1);
+            if (frequencyMap.get(temp.data) > maxFrequency) {
+                mostFrequent = temp.data;
+                maxFrequency = frequencyMap.get(temp.data);
             }
-
-            if (frequency > maxFrequency) {
-                maxFrequency = frequency;
-                mostFrequent = data;
-            }
-
             temp = temp.next;
         }
 
         return mostFrequent;
-    }
-
-    private static class Node<T> {
-        T data;
-        Node<T> next;
-
-        Node(T data) {
-            this.data = data;
-            this.next = null;
-        }
     }
 }
