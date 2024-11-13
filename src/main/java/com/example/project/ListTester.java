@@ -38,12 +38,14 @@ public class ListTester {
             l1.findNext();
         }
 
-        do {
+        while (true) {
             l2.insert(l1.retrieve());
+            if (l1.first()) {
+                break;
+            }
             l1.findPrevious();
-        } while (!l1.first());
-
-        l2.insert(l1.retrieve());
+        }
     }
 }
+
 
