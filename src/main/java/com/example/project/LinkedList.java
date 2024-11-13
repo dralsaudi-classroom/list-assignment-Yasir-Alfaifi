@@ -1,33 +1,39 @@
-package com.example.project;
+public class LinkedList<T> implements List<T> {
+    private Node<T> head;
+    private Node<T> current;
 
-public class LinkedList<T> implements List<T>{
-	private Node<T> head;
-	private Node<T> current;
-	
     public LinkedList() {
-		head = current = null;
-	}
-	public boolean empty() {
-		return head == null;
-	}
-	public boolean last() {
-		return current.next == null;
-	}
+        head = current = null;
+    }
+
+    public boolean empty() {
+        return head == null;
+    }
+
+    public boolean last() {
+        return current.next == null;
+    }
+
     public boolean full() {
         return false;
     }
+
     public void findFirst() {
         current = head;
     }
+
     public void findNext() {
         current = current.next;
     }
+
     public T retrieve() {
         return current.data;
     }
+
     public void update(T e) {
         current.data = e;
     }
+
     public void insert(T e) {
         if (empty()) {
             current = head = new Node<T>(e);
@@ -38,6 +44,7 @@ public class LinkedList<T> implements List<T>{
             current.next = tmp;
         }
     }
+
     public void remove() {
         if (current == head) {
             head = head.next;
@@ -54,13 +61,46 @@ public class LinkedList<T> implements List<T>{
             current = current.next;
         }
     }
+
     public T mostFrequentElement() {
-        throw new UnsupportedOperationException("Not supported yet.");
-        //         Write the method mostFrequentElement, member of the class LinkedList, that returns
-        // the most frequent element in the list. The most frequent element is the element
-        // appearing the highest number of times. If one or more element appear the same
-        // number of times, the one encountered earlier is returned.
-        // Example 1.1. Given the list l : A, B, C, B, C, D, E, mostFrequentElement() returns
-        // B.
+        if (empty()) {
+            throw new IllegalStateException("The list is empty.");
+        }
+
+        Node<T> temp = head;
+        T mostFrequent = null;
+        int maxFrequency = 0;
+
+        while (temp != null) {
+            T data = temp.data;
+            int frequency = 0;
+            Node<T> innerTemp = head;
+
+            while (innerTemp != null) {
+                if (innerTemp.data.equals(data)) {
+                    frequency++;
+                }
+                innerTemp = innerTemp.next;
+            }
+
+            if (frequency > maxFrequency) {
+                maxFrequency = frequency;
+                mostFrequent = data;
+            }
+
+            temp = temp.next;
+        }
+
+        return mostFrequent;
+    }
+
+    private static class Node<T> {
+        T data;
+        Node<T> next;
+
+        Node(T data) {
+            this.data = data;
+            this.next = null;
+        }
     }
 }
