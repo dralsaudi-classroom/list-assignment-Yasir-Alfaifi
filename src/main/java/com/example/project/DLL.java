@@ -77,3 +77,6 @@ public class DLL<T> {
             } else if (temp.data.equals(e2)) {
                 endNode = temp;
                 break;
+if (startNode == null || endNode == null || startNode == endNode) {
+            return;
+        }
