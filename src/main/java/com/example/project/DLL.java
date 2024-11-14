@@ -64,40 +64,31 @@ public class DLL<T> {
         else
             current = current.next;
     }
-    public void removeBetween(T e1, T e2) {
-    if (empty() || e1 == null || e2 == null || e1.equals(e2)) {
-        return;
+   public void removeBetween(T e1, T e2) {
+    if (head == null) return;
+
+    DLLNode<T> startNode = head;
+    while (startNode != null && !startNode.data.equals(e1)) {
+        startNode = startNode.next;
     }
 
-    DLLNode<T> node1 = null;
-    DLLNode<T> node2 = null;
-    DLLNode<T> temp = head;
+    if (startNode == null) return;
 
-    while (temp != null) {
-        if (temp.data.equals(e1)) {
-            node1 = temp;
-        } else if (temp.data.equals(e2)) {
-            node2 = temp;
-            break;
-        }
+    DLLNode<T> endNode = startNode.next;
+    while (endNode != null && !endNode.data.equals(e2)) {
+        endNode = endNode.next;
+    }
+
+    if (endNode == null) return;
+
+    DLLNode<T> temp = startNode.next;
+    while (temp != endNode) {
+        DLLNode<T> toRemove = temp;
         temp = temp.next;
+        toRemove.next = toRemove.previous = null;
     }
 
-    if (node1 == null || node2 == null || node1 == node2 || node1.next == node2) {
-        return;
-    }
-
-    DLLNode<T> start = node1.next;
-    DLLNode<T> end = node2;
-
-    node1.next = end;
-    end.previous = node1;
-
-    while (start != end) {
-        DLLNode<T> next = start.next;
-        start.next = start.previous = null;
-        start = next;
-    }
-
+    startNode.next = endNode;
+    endNode.previous = startNode;
     current = head;
 }}
